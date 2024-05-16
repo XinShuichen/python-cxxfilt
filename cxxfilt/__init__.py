@@ -71,7 +71,7 @@ class Demangler(BaseDemangler):
         self._cxa_demangle.restype = CharP
 
     def __repr__(self) -> str:
-        return f'<{self.__class__.__name__} libc={self._libc_name!r} libcxx={self._libcxx_name!r}>'
+        return '<{} libc={!r} libcxx={!r}>'.format(self.__class__.__name__, self._libc_name, self._libcxx_name)
 
     def demangleb(self, mangled_name: bytes, external_only: bool = True) -> bytes:
         # Wikipedia: All *external* mangled symbols begin with _Z
@@ -116,7 +116,7 @@ def _get_default_demangler() -> BaseDemangler:
     return Demangler(libc, libcxx)
 
 
-default_demangler: BaseDemangler = _get_default_demangler()
+default_demangler = _get_default_demangler()
 
 
 def demangle(mangled_name: str, external_only: bool = True) -> str:
